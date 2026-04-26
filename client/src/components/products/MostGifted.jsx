@@ -1,63 +1,66 @@
 import { Plus } from "lucide-react";
-import whiteRose1 from "../../assets/products/heritageProducts/White_Roses1.webp";
-import whiteRose2 from "../../assets/products/heritageProducts/White_Roses2.webp";
-import whiteRose3 from "../../assets/products/heritageProducts/White_Roses3.webp";
-import whiteRose4 from "../../assets/products/heritageProducts/White_Roses4.webp";
+import { Link } from "react-router";
+import whiteRose1 from "../../assets/products/mostGifted/mostGifted1.0.webp";
+import whiteRose2 from "../../assets/products/mostGifted/mostGifted1.webp";
+import whiteRose3 from "../../assets/products/mostGifted/mostGifted2.webp";
+import whiteRose4 from "../../assets/products/mostGifted/mostGifted2.0.webp";
+import whiteRose5 from "../../assets/products/mostGifted/mostGifted3.0.webp";
+import whiteRose6 from "../../assets/products/mostGifted/mostGifted3.webp";
+import { getProductPath } from "../../utils/productRoutes";
+
 
 
 
 const products = [
   {
     image: whiteRose1,
+    hoverImage: whiteRose2,
     name: "Heart Black Box | Red Roses",
     rating: 4.8,
     reviews: 854,
     price: "$450.00",
-  },
-  {
-    image: whiteRose2,
-    name: "Luxury Pink Box | Roses",
-    rating: 4.9,
-    reviews: 512,
-    price: "$420.00",
   },
   {
     image: whiteRose3,
-    name: "Heart Black Box | Red Roses",
-    rating: 4.8,
-    reviews: 854,
-    price: "$450.00",
-  },
-  {
-    image: whiteRose4,
+    hoverImage: whiteRose4,
     name: "Luxury Pink Box | Roses",
     rating: 4.9,
     reviews: 512,
     price: "$420.00",
+  },
+  {
+    image: whiteRose5,
+    hoverImage: whiteRose6,
+    name: "Heart Black Box | Red Roses",
+    rating: 4.8,
+    reviews: 854,
+    price: "$450.00",
   }
 ];
 
-const HeritageCollection = () => {
+const MostGifted = () => {
   return (
-    <section className="pt-16">
+    <section className="pt-16 max-w-7xl mx-auto">
       <h2 className="text-center text-3xl tracking-widest font-light mb-12 uppercase">
-        The Heritage Collection
+        Most Gifted
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 lg:px-16">
         {products.map((product, index) => (
-          <div key={index} className="group">
+          <Link to={getProductPath(product.name)} key={index} className="group block">
 
-            {/* IMAGE WRAPPER */}
             <div className="relative overflow-hidden cursor-pointer">
 
-              {/* IMAGE */}
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-80 object-cover transition duration-500"
+                className="w-full h-80 object-cover absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
               />
-
+              <img
+                src={product.hoverImage}
+                alt={product.name}
+                className="w-full h-80 object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+              />
 
               <button className="absolute bottom-4 right-4 flex items-center gap-2 bg-black text-white px-4 py-2 text-xs tracking-widest opacity-0 group-hover:opacity-100 transition duration cursor-pointer">
 
@@ -86,7 +89,6 @@ const HeritageCollection = () => {
                   ))}
                 </div>
 
-                {/* Reviews */}
                 <span className="text-xs text-gray-500">
                   ({product.reviews})
                 </span>
@@ -95,7 +97,7 @@ const HeritageCollection = () => {
               <p className="text-sm text-gray-500 mt-1">{product.price}</p>
             </div>
 
-          </div>
+          </Link>
         ))}
       </div>
       <button className="relative mt-8 border border-black text-white bg-black px-12 py-3 text-sm tracking-widest group cursor-pointer mx-auto block overflow-hidden">
@@ -110,4 +112,4 @@ const HeritageCollection = () => {
   );
 };
 
-export default HeritageCollection;
+export default MostGifted;

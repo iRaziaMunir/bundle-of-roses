@@ -1,10 +1,12 @@
 import { Plus } from "lucide-react";
+import { Link } from "react-router";
 import whiteRose1 from "../../assets/products/mostGifted/mostGifted1.0.webp";
 import whiteRose2 from "../../assets/products/mostGifted/mostGifted1.webp";
 import whiteRose3 from "../../assets/products/mostGifted/mostGifted2.webp";
 import whiteRose4 from "../../assets/products/mostGifted/mostGifted2.0.webp";
 import whiteRose5 from "../../assets/products/mostGifted/mostGifted3.0.webp";
 import whiteRose6 from "../../assets/products/mostGifted/mostGifted3.webp";
+import { getProductPath } from "../../utils/productRoutes";
 
 
 
@@ -48,7 +50,7 @@ const HeartCollection = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 lg:px-16">
         {products.map((product, index) => (
-          <div key={index} className="group">
+          <Link to={getProductPath(product.name)} key={index} className="group block">
 
             <div className="relative overflow-hidden cursor-pointer">
 
@@ -98,7 +100,7 @@ const HeartCollection = () => {
               <p className="text-sm text-gray-500 mt-1">{product.price}</p>
             </div>
 
-          </div>
+          </Link>
         ))}
       </div>
       <button className="relative mt-8 border border-black text-white bg-black px-12 py-3 text-sm tracking-widest group cursor-pointer mx-auto block overflow-hidden">

@@ -14,11 +14,10 @@ const Hero3 = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
 
-      <div className="relative z-10 max-w-xl h-full flex items-center mb-[500px] px-6 lg:px-16">
-
-          <h1 className="absolute bottom-[3vh] text-3xl lg:text-4xl font-light leading-tight tracking-widest uppercase text-white">
-            When it comes to unforgettable gifts, The Million Roses is always the right choice.
-          </h1>
+      <div className="relative z-10 max-w-xl h-full flex items-end px-6 lg:px-16 pb-10 sm:pb-14 md:pb-16">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light leading-tight tracking-widest uppercase text-white">
+          When it comes to unforgettable gifts, The Million Roses is always the right choice.
+        </h1>
       </div>
     </section>
   );

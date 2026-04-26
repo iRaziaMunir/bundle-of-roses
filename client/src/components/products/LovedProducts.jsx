@@ -1,9 +1,11 @@
 import { Heart } from "lucide-react";
+import { Link } from "react-router";
 import blackSmallHeart from "../../assets/products/lovedProducts/black_small_heart.webp";
 import blackBigHeart from "../../assets/products/lovedProducts/black_big_heart.webp";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css';
+import { getProductPath } from "../../utils/productRoutes";
 
 const products = [
   {
@@ -91,7 +93,7 @@ const LovedProducts = () => {
         >
           {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <div className="group relative overflow-hidden">
+              <Link to={getProductPath(product.name)} className="group relative overflow-hidden block">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -114,10 +116,13 @@ const LovedProducts = () => {
                   </div>
                   <p className="text-gray-500 text-lg mb-2">{product.price}</p>
                 </div>
-              </div>
-              <button className="w-full mt-2 px-6 py-3 border border-black text-white bg-black text-sm tracking-widest cursor-pointer">
+              </Link>
+              <Link
+                to={getProductPath(product.name)}
+                className="w-full mt-2 px-6 py-3 border border-black text-white bg-black text-sm tracking-widest cursor-pointer block text-center"
+              >
                 View Product
-              </button>
+              </Link>
               {/* Navigation buttons inside the slide */}
     <button className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white w-10 h-10 rounded-full hidden group-hover:block z-10 swiper-prev">
       ‹

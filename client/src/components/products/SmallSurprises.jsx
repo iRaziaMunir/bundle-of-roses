@@ -1,10 +1,12 @@
 import { Plus } from "lucide-react";
+import { Link } from "react-router";
 import whiteRose1 from "../../assets/products/mostGifted/mostGifted1.0.webp";
 import whiteRose2 from "../../assets/products/mostGifted/mostGifted1.webp";
 import whiteRose3 from "../../assets/products/mostGifted/mostGifted2.webp";
 import whiteRose4 from "../../assets/products/mostGifted/mostGifted2.0.webp";
 import whiteRose5 from "../../assets/products/mostGifted/mostGifted3.0.webp";
 import whiteRose6 from "../../assets/products/mostGifted/mostGifted3.webp";
+import { getProductPath } from "../../utils/productRoutes";
 
 
 
@@ -33,19 +35,27 @@ const products = [
     rating: 4.8,
     reviews: 854,
     price: "$450.00",
-  }
+  },
+  {
+    image: whiteRose3,
+    hoverImage: whiteRose4,
+    name: "Luxury Pink Box | Roses",
+    rating: 4.9,
+    reviews: 512,
+    price: "$420.00",
+  },
 ];
 
-const MostGifted = () => {
+const SmallSurprises = () => {
   return (
-    <section className="pt-16 max-w-7xl mx-auto">
+    <section className="pt-16 max-w-8xl mx-auto">
       <h2 className="text-center text-3xl tracking-widest font-light mb-12 uppercase">
-        Most Gifted
+        Small Surprises
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 lg:px-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 lg:px-16">
         {products.map((product, index) => (
-          <div key={index} className="group">
+          <Link to={getProductPath(product.name)} key={index} className="group block">
 
             <div className="relative overflow-hidden cursor-pointer">
 
@@ -95,7 +105,7 @@ const MostGifted = () => {
               <p className="text-sm text-gray-500 mt-1">{product.price}</p>
             </div>
 
-          </div>
+          </Link>
         ))}
       </div>
       <button className="relative mt-8 border border-black text-white bg-black px-12 py-3 text-sm tracking-widest group cursor-pointer mx-auto block overflow-hidden">
@@ -105,9 +115,9 @@ const MostGifted = () => {
         <span className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0"></span>
 
       </button>
-
+      <hr className="border-gray-200 my-12" />
     </section>
   );
 };
 
-export default MostGifted;
+export default SmallSurprises;

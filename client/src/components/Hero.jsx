@@ -16,9 +16,9 @@ const Hero = () => {
 
 
       {/* Content */}
-      <div className="relative z-10 max-w-xl h-full flex items-center px-6 lg:px-10">
+      <div className="relative z-10 max-w-xl h-full flex items-end px-6 lg:px-10 pb-10 sm:pb-14 md:pb-16">
 
-        <div className="max-w-xl text-white mt-[200px]">
+        <div className="max-w-xl text-white">
 
           <h6 className="text-xs tracking-[0.3em] mb-4">
             THE MILLION ROSES®
