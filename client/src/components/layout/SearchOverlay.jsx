@@ -17,11 +17,6 @@ export default function SearchOverlay({
     inputRef.current?.focus();
   }, [isOpen]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    setActiveTab("products");
-  }, [isOpen, query]);
-
   if (!isOpen) return null;
 
   const hasAnyResults =

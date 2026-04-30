@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight, Heart, Leaf, Truck } from "lucide-react";
 import { useParams } from "react-router";
 import { productDetailsBySlug } from "../data/productDetailsData";
@@ -32,15 +32,7 @@ const DetailAccordion = ({ title, subtitle, isOpen, onToggle, children }) => (
   </div>
 );
 
-export default function ProductDetails() {
-  const { slug } = useParams();
-  const product = useMemo(
-    () =>
-      productDetailsBySlug[slug] ||
-      productDetailsBySlug["heart-black-box-light-pink-roses"],
-    [slug]
-  );
-
+function ProductDetailsInner({ product }) {
   const [activeImage, setActiveImage] = useState(product.gallery[0]);
   const [openDetailSection, setOpenDetailSection] = useState("romantic-surprise");
   const [openInfoSection, setOpenInfoSection] = useState("");
@@ -50,14 +42,6 @@ export default function ProductDetails() {
   const [selectedBoxColor, setSelectedBoxColor] = useState(
     getInitialSelectedColor(product.boxColors)
   );
-
-  useEffect(() => {
-    setActiveImage(product.gallery[0]);
-    setOpenDetailSection("romantic-surprise");
-    setOpenInfoSection("");
-    setSelectedFlowerColor(getInitialSelectedColor(product.flowerColors));
-    setSelectedBoxColor(getInitialSelectedColor(product.boxColors));
-  }, [product]);
 
   return (
     <section className="px-4 lg:px-8 py-6 lg:py-7 bg-[#f7f4f4]">
@@ -203,5 +187,17 @@ export default function ProductDetails() {
       </div>
     </section>
   );
+}
+
+export default function ProductDetails() {
+  const { slug } = useParams();
+  const product = useMemo(
+    () =>
+      productDetailsBySlug[slug] || productDetailsBySlug["heart-black-box-light-pink-roses"],
+    [slug]
+  );
+
+  // Remount on slug change so all PDP state resets without syncing effects.
+  return <ProductDetailsInner key={slug} product={product} />;
 }
 

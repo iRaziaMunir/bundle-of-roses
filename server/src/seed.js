@@ -11,29 +11,37 @@ async function seed() {
   await Collection.deleteMany({});
   await Product.deleteMany({});
 
-  await Collection.insertMany([
-    { name: "Grand Gestures", slug: "grand-gestures" },
-    { name: "Small Surprises", slug: "small-surprises" },
-    { name: "Most Gifted", slug: "most-gifted" },
+  const products = await Product.insertMany([
+    {
+      title: "Baby Heart Beige Box",
+      slug: "baby-heart-beige-box",
+      description: "Small in size, big in sentiment.",
+      images: [{ url: "https://placehold.co/600x600/f7e6ea/1d1a1a?text=Baby+Heart", alt: "Baby Heart Beige Box" }],
+      roseColor: "White",
+      boxColor: "Beige",
+      price: { amount: 190, currency: "USD" },
+      quantity: 25,
+      status: "active",
+    },
+    {
+      title: "Classic Black Superdome Box",
+      slug: "classic-black-superdome-box",
+      description: "A grand gesture with serious presence.",
+      images: [{ url: "https://placehold.co/600x600/f7e6ea/1d1a1a?text=Superdome", alt: "Classic Black Superdome Box" }],
+      roseColor: "Red",
+      boxColor: "Black",
+      price: { amount: 410, currency: "USD" },
+      quantity: 10,
+      status: "active",
+    },
   ]);
 
-  await Product.insertMany([
-    {
-      name: "Red Rose Bouquet",
-      slug: "red-rose-bouquet",
-      price: 1499,
-      images: [],
-      collectionSlug: "grand-gestures",
-      stockQuantity: 20,
-    },
-    {
-      name: "Pink Tulip Set",
-      slug: "pink-tulip-set",
-      price: 899,
-      images: [],
-      collectionSlug: "small-surprises",
-      stockQuantity: 50,
-    },
+  const [p1, p2] = products;
+
+  await Collection.insertMany([
+    { title: "Grand Gestures", slug: "grand-gestures", status: "active", productIds: [p2._id] },
+    { title: "Small Surprises", slug: "small-surprises", status: "active", productIds: [p1._id] },
+    { title: "Most Gifted", slug: "most-gifted", status: "active", productIds: [p1._id, p2._id] },
   ]);
 
   console.log("Seed done");

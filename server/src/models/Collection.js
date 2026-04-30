@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const collectionSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true },
+    title: { type: String, required: true, trim: true },
     slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
     description: { type: String, default: "" },
-    imageUrl: { type: String, default: "" },
-    isActive: { type: Boolean, default: true },
+    status: { type: String, enum: ["active", "hidden"], default: "active", index: true },
+    productIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );

@@ -3,30 +3,52 @@ const Product = require("../models/Product");
 
 const router = express.Router();
 
-// GET /api/products?collection=grand-gestures&search=rose
+function pickPublicProductFields(product) {
+  return {
+    _id: product._id,
+    title: product.title,
+    slug: product.slug,
+    description: product.description,
+    images: product.images,
+    roseColor: product.roseColor,
+    boxColor: product.boxColor,
+    price: product.price,
+    quantity: product.quantity,
+    status: product.status,
+    createdAt: product.createdAt,
+    updatedAt: product.updatedAt,
+  };
+}
+
+// GET /api/products?search=rose
 router.get("/", async (req, res) => {
-  const { collection, search } = req.query;
+  const { search, status } = req.query;
 
-  const filter = { isActive: true };
-
-  if (collection) filter.collectionSlug = String(collection).toLowerCase();
+  const filter = {};
+  filter.status = "active";
+  if (status && ["active", "draft", "archived"].includes(String(status))) {
+    filter.status = String(status);
+  }
 
   if (search) {
     const q = String(search).trim();
-    filter.name = { $regex: q, $options: "i" };
+    filter.$text = { $search: q };
   }
 
-  const products = await Product.find(filter).sort({ createdAt: -1 });
-  res.json(products);
+  const products = await Product.find(filter)
+    .sort(search ? { score: { $meta: "textScore" } } : { createdAt: -1 })
+    .limit(200);
+
+  res.json(products.map(pickPublicProductFields));
 });
 
 // GET /api/products/:slug
 router.get("/:slug", async (req, res) => {
-  const product = await Product.findOne({ slug: req.params.slug, isActive: true });
+  const product = await Product.findOne({ slug: req.params.slug, status: "active" });
 
   if (!product) return res.status(404).json({ message: "Product not found" });
 
-  res.json(product);
+  res.json(pickPublicProductFields(product));
 });
 
 module.exports = router;
