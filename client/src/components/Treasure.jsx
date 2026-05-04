@@ -84,28 +84,6 @@ const columns = [
     ),
   },
 ];
-// export default function Treasure() {
-//   return (
-//     <section className="py-12 bg-[#f7f4f4]">
-//       <div className="max-w-8xl mx-auto px-6 lg:px-16">
-//         <h2 className="text-start text-3xl tracking-widest font-light mb-12 uppercase">
-//           Treasure the beauty of a rose that never wilts
-//         </h2>
-//         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-12">
-//         {
-//           columns.map((column, index) => (
-//             <p key={index} className="text-sm tracking-thin leading-relaxed">
-//               {column.text}
-//             </p>
-//           ))
-//         }
-
-//         </div>
-//       </div>
-
-//     </section>
-//   )
-// }
 export default function Treasure() {
   return (
     <section className="py-16 bg-[#f7f4f4]">

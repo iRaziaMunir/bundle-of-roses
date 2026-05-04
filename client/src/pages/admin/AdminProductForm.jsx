@@ -18,7 +18,7 @@ import {
   selectAdminProductsMutationStatus,
   selectAdminProductsStatus,
   updateAdminProductThunk,
-} from "../../redux/Slices/adminProductsSlice";
+} from "../../redux/slices/adminProductsSlice";
 
 const DEFAULT_CURRENCY = "USD";
 
@@ -32,7 +32,7 @@ function slugify(value = "") {
     .replace(/(^-|-$)/g, "");
 }
 
-const ROSE_COLOR_OPTIONS = ["Red", "Black", "Pink", "White", "Light Pink", "Burgundy", "Purple", "Blue", "Yellow", "Orange"];
+const ROSE_COLOR_OPTIONS = ["Red", "Black", "Pink", "White", "Light Pink", "Burgundy", "Purple", "Blue", "Yellow", "Orange","Gold"];
 const BOX_COLOR_OPTIONS = ["Beige", "Black", "White", "Pink", "Gold", "Bordeaux"];
 
 const emptyForm = () => ({

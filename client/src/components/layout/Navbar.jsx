@@ -10,7 +10,7 @@ import {
   User,
   X,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import SearchOverlay from "./SearchOverlay";
 import useSearchResults from "../../hooks/useSearchResults";
 import {
@@ -23,7 +23,24 @@ import {
   searchSuggestions,
 } from "../../data/navigationData";
 
+function isRouteActiveForNavLink(pathname, link) {
+  const label = typeof link === "string" ? link : link.label;
+
+  if (label === "Home") return pathname === "/";
+  if (label === "Collections") {
+    return pathname === "/collections" || pathname.startsWith("/collections/");
+  }
+  if (label === "Flowers") {
+    if (pathname.startsWith("/category/products/")) return false;
+    return pathname.startsWith("/flowers") || pathname.startsWith("/category/");
+  }
+  if (label === "Best Sellers") return pathname.startsWith("/best-sellers");
+  if (label === "Mother's Day") return pathname.startsWith("/mothers-day");
+  return false;
+}
+
 const Navbar = () => {
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -139,18 +156,29 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden lg:block">
             <nav className="flex space-x-8 text-sm tracking-widest">
-              {navLinks.map((link, index) => (
+              {navLinks.map((link, index) => {
+                const linkLabel = getLinkLabel(link);
+                const hoverKey =
+                  linkLabel === "Flowers"
+                    ? FLOWERS_MENU
+                    : linkLabel === "Mother's Day"
+                      ? MOTHERS_DAY_MENU
+                      : linkLabel;
+                const isLinkHovered = activeMenu === hoverKey;
+                const isRouteActive = isRouteActiveForNavLink(pathname, link);
+                const isNavActive = isLinkHovered || (activeMenu === null && isRouteActive);
+
+                return (
                 <div
                   key={index}
                   className="relative"
                   onMouseEnter={() => {
-                    const linkLabel = getLinkLabel(link);
                     if (linkLabel === "Flowers") openMenu(FLOWERS_MENU);
                     else if (linkLabel === "Mother's Day") openMenu(MOTHERS_DAY_MENU);
                     else openMenu(linkLabel);
                   }}
                   onMouseLeave={
-                    getLinkLabel(link) === "Flowers" || getLinkLabel(link) === "Mother's Day"
+                    linkLabel === "Flowers" || linkLabel === "Mother's Day"
                       ? scheduleMenuClose
                       : undefined
                   }
@@ -158,20 +186,15 @@ const Navbar = () => {
                   <Link
                     to={getLinkTo(link)}
                     className={`border-b-2 pb-1 transition-colors ${
-                      activeMenu ===
-                      (getLinkLabel(link) === "Flowers"
-                        ? FLOWERS_MENU
-                        : getLinkLabel(link) === "Mother's Day"
-                          ? MOTHERS_DAY_MENU
-                          : getLinkLabel(link))
+                      isNavActive
                         ? "border-black text-black"
                         : "border-transparent hover:border-black hover:text-black"
                     }`}
                   >
-                    {getLinkLabel(link)}
+                    {linkLabel}
                   </Link>
 
-                  {getLinkLabel(link) === "Mother's Day" && activeMenu === MOTHERS_DAY_MENU && (
+                  {linkLabel === "Mother's Day" && activeMenu === MOTHERS_DAY_MENU && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-auto min-w-[220px] bg-[#f7f4f4] border border-gray-200 shadow-md z-40"
                       onMouseEnter={() => openMenu(MOTHERS_DAY_MENU)}
@@ -191,7 +214,8 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </nav>
 
             {activeMenu === FLOWERS_MENU && (
@@ -306,11 +330,15 @@ const Navbar = () => {
                     };
                     const linkLabel = getLinkLabel(link);
                     const subMenuKey = submenuMap[linkLabel];
+                    const mobileRouteActive = isRouteActiveForNavLink(pathname, link);
                     return (
                       <div key={index} className="border-b border-gray-300 py-8">
                         {subMenuKey ? (
                           <button
-                            className="w-full flex items-center justify-between"
+                            type="button"
+                            className={`w-full flex items-center justify-between ${
+                              mobileRouteActive ? "text-black" : ""
+                            }`}
                             onClick={() => setMobileView(subMenuKey)}
                           >
                             <span>{linkLabel}</span>
@@ -319,7 +347,7 @@ const Navbar = () => {
                         ) : (
                           <Link
                             to={getLinkTo(link)}
-                            className="block w-full"
+                            className={`block w-full ${mobileRouteActive ? "text-black" : ""}`}
                             onClick={closeMobileMenu}
                           >
                             {linkLabel}

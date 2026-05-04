@@ -9,6 +9,7 @@ const Cart = require("../models/Cart");
 const Order = require("../models/Order");
 const User = require("../models/User");
 const InventoryAdjustment = require("../models/InventoryAdjustment");
+const { formatProductWriteError, statusCodeForProductWriteError } = require("../utils/formatProductWriteError");
 
 const router = express.Router();
 
@@ -69,8 +70,8 @@ router.post("/products", async (req, res) => {
     const product = await Product.create(payload);
     res.status(201).json(product);
   } catch (err) {
-    const message = err?.message || "Unable to create product";
-    res.status(400).json({ message });
+    const message = formatProductWriteError(err);
+    res.status(statusCodeForProductWriteError(err)).json({ message });
   }
 });
 
@@ -80,8 +81,8 @@ router.patch("/products/:id", async (req, res) => {
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json(product);
   } catch (err) {
-    const message = err?.message || "Unable to update product";
-    res.status(400).json({ message });
+    const message = formatProductWriteError(err);
+    res.status(statusCodeForProductWriteError(err)).json({ message });
   }
 });
 

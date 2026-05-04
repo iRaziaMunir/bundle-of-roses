@@ -59,12 +59,12 @@ export default function AdminShell() {
               })}
             </nav>
 
-            <div className="mt-8 rounded-[24px] border border-white/10 bg-white/6 p-4">
+            {/* <div className="mt-8 rounded-[24px] border border-white/10 bg-white/6 p-4">
               <p className="text-[11px] uppercase tracking-[0.3em] text-white/45">Brand mood</p>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Soft blush, cream backgrounds, and charcoal accents to stay visually aligned with the storefront.
               </p>
-            </div>
+            </div> */}
           </aside>
 
           <section className="min-w-0 bg-[linear-gradient(180deg,#f9f5f2_0%,#f6f1ee_100%)]">

@@ -9,6 +9,15 @@ function buildHeaders(customHeaders = {}) {
   };
 }
 
+function sanitizeUserFacingErrorMessage(message) {
+  const text = String(message || "");
+  if (!text.includes("E11000")) return text;
+  if (/slug/i.test(text) || /dup key:\s*\{\s*slug/i.test(text)) {
+    return "A product with this name or slug already exists. Use a different title or slug.";
+  }
+  return "This record already exists. Check for duplicates.";
+}
+
 async function parseResponse(response) {
   const contentType = response.headers.get("content-type") || "";
   const payload = contentType.includes("application/json") ? await response.json() : await response.text();
@@ -20,7 +29,7 @@ async function parseResponse(response) {
     } else if (typeof payload === "string" && payload.trim()) {
       message = payload.length > 280 ? "Request failed" : payload.trim();
     }
-    throw new Error(String(message));
+    throw new Error(sanitizeUserFacingErrorMessage(message));
   }
 
   return payload;

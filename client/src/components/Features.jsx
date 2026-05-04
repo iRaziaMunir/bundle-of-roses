@@ -24,7 +24,7 @@ const Features = () => {
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {features.map((feature, index) => (
-            <div key={index} className="group cursor-pointer">
+            <div key={index} className="group">
               {/* Icon */}
               <div className="">
                 {feature.icon}
