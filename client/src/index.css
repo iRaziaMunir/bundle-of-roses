@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* swiper navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0; /* hide initially */
+  transition: opacity 0.3s;
+  top: 50%; /* vertically center */
+  transform: translateY(-50%); /* perfect center */
+  width: 2.5rem; /* button size */
+  height: 2.5rem;
+  background-color: rgba(0,0,0,0.6); /* optional background */
+  color: white; /* arrow color */
+  border-radius: 50%;
+}
+
+.relative:hover .swiper-button-next,
+.relative:hover .swiper-button-prev {
+  opacity: 1; /* show on hover */
+}
+
+.swiper-button-prev {
+  left: 0.5rem; /* distance from left edge */
+}
+
+.swiper-button-next {
+  right: 0.5rem; /* distance from right edge */
+}
+
+/* testimonial text animation */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.6s ease-out;
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
